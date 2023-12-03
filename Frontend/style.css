@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poppins:wght@300&display=swap');
+*{
+    margin: 0px;
+    padding: 0px;
+    /* it allow us to add padding and border in width height */
+    box-sizing: border-box; 
+    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
+}
+
+.main-container{
+    display: flex;
+}
+
+/* --------------left-section------------------------ */
+
+.left{
+    width: 20%;
+    height: 100vh;
+    border: 1px solid gray;
+    border-radius: 1rem;
+    padding: 1rem;
+    background: #1e1616;
+}
+
+.title h3{
+    font-size: xx-large;
+    color: darkorange;
+    margin-bottom: 1rem;
+}
+
+.btn-addtodo button{
+    width: 98%;
+    height: 4vh;
+    border: 1px solid gray;
+    border-radius: 1rem;
+    background: #665d5d;
+    margin-bottom: 2rem;
+}
+
+.nav-items li a{
+    text-decoration: none;
+    color: antiquewhite;
+}
+
+
+.nav-items li a:hover{
+    color: rgb(85, 100, 100);
+}
+
+.nav-items li{
+    list-style: none;
+}
+
+.nav-items ul{
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+
+/* ---------------------middle---------------- */
+
+.middle{
+    width: 60%;
+    height: 100vh;
+    border: 1px solid gray;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    background: #1e1616;
+    color: antiquewhite;
+
+}
+
+.upper-section{
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-small-addtodo button{
+    width: 7rem;
+    height: 4vh;
+    border: 1px solid gray;
+    border-radius: 1rem;
+    background: #665d5d;
+    margin-bottom: 2rem;
+}
+
+.search input{
+    border: 1px solid gray;
+    border-radius: 0.6rem;
+    padding-left: 0.7rem;
+    padding: 0.2rem;
+    padding-left: 0.7rem;
+    background: #252538;
+    width: 16rem;
+}
+
+.search img{
+    position: absolute;
+    width: 1.3rem;
+    margin-left: -2.2rem;
+    margin-top: 0.25rem;
+}
+
+.middle-section{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.btn-of-task img{
+    width: 1.5rem;
+}
+
+.middel-of-task{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-of-task{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 1.5rem;
+}
+
+.btn-of-task button{
+    order: 1px solid gray;
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+    background: azure;
+}
+
+.task-module{
+    border: 1px solid gray;
+    padding: 0.7rem;
+    border-radius: 1rem;
+    background: #4b3c1d;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+
+/* ----------------right---------------- */
+
+.right{
+    width: 20%;
+    height: 100vh;
+    border: 1px solid gray;
+    border-radius: 1rem;
+    padding: 1rem;
+    background: #1e1616;
+    color: aqua;
+}
+
+.main-calander{
+    background-color: #647311;
+    border: 1px solid gray;
+    padding: 0.8rem;
+    border-radius: 1rem;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.7rem;
+}
+.icons img{
+    width: 1rem;
+}
+
+.icons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+.weeks{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.7rem;
+}
+
+.weeks li{
+    list-style: none;
+}
+
+.calender ul li{
+    width: calc(100%/7);
+}
+
+.calender ul{
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.inactive{
+    color: rgb(138, 130, 130);
+}
+
+.active{
+    background: rgb(20 20 29);
+    border-radius: 100%;
+}
+
+.days{
+    display: flex;
+    row-gap: 0.4rem;
+}
+
+.days li{
+    list-style: none;
+}
+
+/*-----------task-module-------------------- */
+
+.task-main-module{
+    height: 84%;
+    overflow-y: scroll;
+    overflow: auto;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.date-of-task{
+    font-size: 0.7rem;
+}
+
+.date-of-task p{
+    color: black;
+}
+
+.task-module para{
+    color: #c0af0a;
+}
+
+#complete{
+    width: 1.2rem;
+    height: 1.5rem;
+}
+
+#complete:checked{
+    background-color: green;
+    border-color: #647311;
+}

@@ -3,9 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Todo List</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h1>Todo Task</h1>
+    <section class="main-container">
+     <section class="left">
+          <div class="title">
+            <h3>ToDo</h3>
+          </div>
+          <div class="btn-addtodo">
+            <button onclick="location.href='/Frontend/Task/taskform.html'">Add Todo</button>
+          </div>
+          <div class="nav-items">
+             <ul>
+                <li><a href="">Today's tasks</a></li>
+                <li><a href="#">All tasks</a></li>
+                <li><a href="#">Important tasks</a></li>
+                <li><a href="#" onclick="completedTask()">Completed tasks</a></li>
+             </ul>
+          </div>
+           
+
+     </section>
+
+     <section class="middle">
+        <div class="upper-section">
+            <div class="search">
+                <input type="text" placeholder="Search task">
+                <img src="./Asset/icons8-search-50.png" alt="icon">
+            </div>
+            <div class="btn-small-addtodo">
+                <button onclick="location.href='/Frontend/Task/taskform.html'">Add Todo</button>
+            </div>
+        </div>
+        <div class="middle-section">
+                <div>
+                    <p>All tasks(5 tasks)</p>
+                </div>
+                <div>
+                    <p>Sort by</p>
+                </div>
+        </div>
+        <div class="task-main-module">
+
+        </div>
+     </section>
+
+     <section class="right">
+        <div class="main-calander">
+         <header>
+            <p class="current-date">November 2023</p>
+            <div class="icons">
+                    <img id="prev" src="./Asset/left-arrow.png" alt="left">
+                    <img id="next" src="./Asset/right-arrow.png" alt="right">
+            </div>
+         </header>
+         <div class="calender">
+              <ul class="weeks">
+                <li>Sun</li>
+                <li>Mon</li>
+                <li>Tue</li>
+                <li>Web</li>
+                <li>Thu</li>
+                <li>Fri</li>
+                <li>Sat</li>
+              </ul>
+              <ul class="days">
+
+              </ul>
+         </div>
+        </div>
+     </section>
+    </section>
+     <script src="./script.js"></script>
 </body>
 </html>

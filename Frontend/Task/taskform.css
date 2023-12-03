@@ -1,0 +1,47 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: cursive;
+    background: #060a2c;
+}
+
+form{
+    width: 50%;
+    height: 39vh;
+    border: 1px solid gray;
+    border-radius: 1rem;
+    margin: 0px auto;
+    padding: 2rem;
+    background: #5b6960;
+    margin-top: 13vh;
+}
+
+form input{
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #161414;
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: aqua;
+}
+
+
+form button{
+    width: 24%;
+    height: 5.5vh;;
+    border: 1px solid gray;
+    border-radius: 1rem;
+    background: #050f30;
+    color: aquamarine;
+}
+
+form label{
+    font-size: 1.2rem;
+    background-color: #5b6960;
+}
+
+form div{
+    background: #5b6960;
+}
