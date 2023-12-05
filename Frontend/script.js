@@ -3,9 +3,11 @@
 const currentDate = document.querySelector(".current-date");
 const previousNext = document.querySelectorAll(".icons img");
 const days = document.querySelector(".days");
+const tasksCount = document.querySelector(".middle-section");
 
 let date = new Date();
 let dayOfMonth = ('0' + date.getDate()).slice(-2);
+
 let currYear = date.getFullYear();
 let currMonth = date.getMonth();
 
@@ -69,15 +71,18 @@ previousNext.forEach((icon) => {
 
 let taskModule = document.querySelector(".task-main-module");
 
-function renderTask(){
+function todayTask(){
 let taskInfo = JSON.parse(localStorage.getItem("data"));
-console.log(taskInfo);
+let count = 0;
 let entireInfo  = [];
 taskInfo.forEach((value, i)=>{
+  if(taskInfo[i].date === dayOfMonth){
+  count++;
   entireInfo.push(`
   <div class="task-module">
-  <div>
-    <p class='para'>${taskInfo[i].task}</p>
+  <div class='task-module-title'>
+    <p class='task-title'>${taskInfo[i].task}</p>
+    <p class='priority-p'>${taskInfo[i].priority === 'high' ? 'Important': ''}</p>
   </div>
   <div class="middel-of-task">
   <div>
@@ -89,25 +94,29 @@ taskInfo.forEach((value, i)=>{
   </div>
   </div>
   <div class="date-of-task">
-  <p>${dayOfMonth}/${currMonth}/${currYear}</p>
+  <p>${taskInfo[i].date === dayOfMonth ? `${taskInfo[i].date}/${currMonth}/${currYear}` : ''}</p>
   </div>
   </div>
   `);
-  
+  }
   taskModule.innerHTML = entireInfo.join('');
+  tasksCount.innerHTML = 
+  ` <div>
+    <p>All tasks(${count} tasks)</p>
+  </div>`
 })
 }
-renderTask(); 
+todayTask(); 
 // -----------------delete-functionality------------------
 
 
 
-let localData = JSON.parse(localStorage.getItem('data'));
+let localData = JSON.parse(localStorage.getItem('data'));   // local data
 
 function deleteTask(i){
   localData.splice(i,1); // removiing one item
   localStorage.setItem('data',JSON.stringify(localData));
-  renderTask(); 
+  todayTask(); 
 }
 
 
@@ -116,3 +125,147 @@ function deleteTask(i){
 function completedTask(){
   console.log('Completed task clicked');
 }
+
+
+
+// ----------------------------important-tasks-shortlist------------------------------------
+
+function importantTask(){
+
+    let taskInfo = JSON.parse(localStorage.getItem("data"));
+    let count = 0;
+    console.log(taskInfo);
+    let entireInfo  = [];
+    taskInfo.filter((value, i)=>{
+      if(value.priority.toLowerCase() === 'high'){
+        count++;
+        entireInfo.push(`
+        <div class="task-module">
+        <div class='task-module-title'>
+          <p class='task-title'>${taskInfo[i].task}</p>
+          <p class='priority-p'>${taskInfo[i].priority === 'high' ? 'Important': ''}</p>
+        </div>
+        <div class="middel-of-task">
+        <div>
+            <p class='para'>${taskInfo[i].desc}</p>
+        </div>
+        <div class="btn-of-task">
+            <input type="checkbox" id="complete" name="complete" value="Completed">
+            <img onclick="deleteTask(${i})" src="./Asset/bin_484611.png" alt="img">
+        </div>
+        </div>
+        <div class="date-of-task">
+        <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
+        </div>
+        </div>
+        `);
+      }
+     
+      taskModule.innerHTML = entireInfo.join('');
+      tasksCount.innerHTML = 
+      ` <div>
+        <p>All tasks(${count} tasks)</p>
+      </div>`
+    })
+    console.log("importantTask working")
+}
+
+// ------------------------------------------allTask-module---------------------------------------
+
+function allTask(){
+
+  console.log('All task Cliked');
+
+  let taskInfo = JSON.parse(localStorage.getItem("data"));
+  let count = 0;
+  let entireInfo  = [];
+  taskInfo.filter((value, i)=>{
+      count++;
+      entireInfo.push(`
+      <div class="task-module">
+      <div class='task-module-title'>
+        <p class='task-title'>${taskInfo[i].task}</p>
+        <p class='priority-p'>${taskInfo[i].priority === 'high' ? 'Important': ''}</p>
+      </div>
+      <div class="middel-of-task">
+      <div>
+          <p class='para'>${taskInfo[i].desc}</p>
+      </div>
+      <div class="btn-of-task">
+          <input type="checkbox" id="complete" name="complete" value="Completed" onclick=''>
+          <img onclick="deleteTask(${i})" src="./Asset/bin_484611.png" alt="img">
+      </div>
+      </div>
+      <div class="date-of-task">
+      <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
+      </div>
+      </div>
+      `);
+   
+    taskModule.innerHTML = entireInfo.join('');
+    tasksCount.innerHTML = 
+    ` <div>
+      <p>All tasks(${count} tasks)</p>
+    </div>`
+  })
+  console.log("importantTask working")
+}
+
+
+// -------------------------search-functionality---------------------------
+
+let searchInput = document.getElementById('search');
+
+searchInput.addEventListener('input', function() {
+    let search = searchInput.value.toLowerCase();
+    filterTasks(search);
+});
+
+function filterTasks(search) {
+    let taskInfo = JSON.parse(localStorage.getItem("data"));
+    let count = 0;
+    let entireInfo = [];
+
+    taskInfo.filter((value, i) => {
+        // Check if the task contains the search text
+        if (
+            taskInfo[i].task.toLowerCase().includes(search) ||
+            taskInfo[i].desc.toLowerCase().includes(search)
+        ) {
+            count++;
+            entireInfo.push(`
+                <div class="task-module">
+                    <div class='task-module-title'>
+                        <p class='task-title'>${taskInfo[i].task}</p>
+                        <p class='priority-p'>${
+                            taskInfo[i].priority === 'high' ? 'Important' : ''
+                        }</p>
+                    </div>
+                    <div class="middel-of-task">
+                        <div>
+                            <p class='para'>${taskInfo[i].desc}</p>
+                        </div>
+                        <div class="btn-of-task">
+                            <input type="checkbox" id="complete" name="complete" value="Completed">
+                            <img onclick="deleteTask(${i})" src="./Asset/bin_484611.png" alt="img">
+                        </div>
+                    </div>
+                    <div class="date-of-task">
+                        <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
+                    </div>
+                </div>
+            `);
+        }
+    });
+
+    taskModule.innerHTML = entireInfo.join('');
+    tasksCount.innerHTML = `
+        <div>
+            <p>All tasks(${count} tasks)</p>
+        </div>`;
+}
+
+
+
+
+

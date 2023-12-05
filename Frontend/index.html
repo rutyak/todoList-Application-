@@ -17,9 +17,9 @@
           </div>
           <div class="nav-items">
              <ul>
-                <li><a href="">Today's tasks</a></li>
-                <li><a href="#">All tasks</a></li>
-                <li><a href="#">Important tasks</a></li>
+                <li><a href="#" onclick="todayTask()">Today's tasks</a></li>
+                <li><a href="#" onclick="allTask()">All tasks</a></li>
+                <li><a href="#" onclick="importantTask()">Important tasks</a></li>
                 <li><a href="#" onclick="completedTask()">Completed tasks</a></li>
              </ul>
           </div>
@@ -30,7 +30,7 @@
      <section class="middle">
         <div class="upper-section">
             <div class="search">
-                <input type="text" placeholder="Search task">
+                <input type="text" placeholder="Search task" id="search">
                 <img src="./Asset/icons8-search-50.png" alt="icon">
             </div>
             <div class="btn-small-addtodo">
@@ -38,12 +38,7 @@
             </div>
         </div>
         <div class="middle-section">
-                <div>
-                    <p>All tasks(5 tasks)</p>
-                </div>
-                <div>
-                    <p>Sort by</p>
-                </div>
+              
         </div>
         <div class="task-main-module">
 
