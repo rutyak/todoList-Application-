@@ -1,7 +1,16 @@
 console.log("Script Loaded");
 var i = 0;
 let date = new Date();
-console.log('date : ',date);
+//time
+let hours = date.getHours();
+let ampm = hours < 12 ? 'am':'pm';
+hours = hours % 12;
+hours = hours ? hours : 12; //hours 0 should be 12
+let minutes = date.getMinutes();
+minutes = minutes < 10 ? '0'+minutes: minutes;
+let time = hours +':'+ minutes + ampm;
+console.log("time :", time);
+//Date
 let dayOfMonth = ('0' + date.getDate()).slice(-2);
 let currYear = date.getFullYear();
 let currMonth = date.getMonth();
@@ -23,7 +32,8 @@ function taskLoaded(e) {
             'task': task,
             'desc' : desc,
             'priority': priority,
-            'date': `${dayOfMonth}`
+            'date': `${dayOfMonth}`,
+            'time': time
         }
         
         data.push(taskData);

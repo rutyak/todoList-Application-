@@ -1,3 +1,5 @@
+
+
 // ---------------------------calender-functionality--------------------------------------------
 
 const currentDate = document.querySelector(".current-date");
@@ -10,6 +12,16 @@ let dayOfMonth = ('0' + date.getDate()).slice(-2);
 
 let currYear = date.getFullYear();
 let currMonth = date.getMonth();
+
+//time
+let hours = date.getHours();
+let ampm = hours < 12 ? 'am':'pm';
+hours = hours % 12;
+hours = hours ? hours : 12; //hours 0 should be 12
+let minutes = date.getMinutes();
+minutes = minutes < 10 ? '0'+minutes: minutes;
+let time = hours +':'+ minutes + ampm;
+console.log("time :", time);
 
 let months = [
   "January",
@@ -81,20 +93,21 @@ taskInfo.forEach((value, i)=>{
   entireInfo.push(`
   <div class="task-module">
   <div class='task-module-title'>
-    <p class='task-title'>${taskInfo[i].task}</p>
+    <p class='task-title same'>${taskInfo[i].task}</p>
     <p class='priority-p'>${taskInfo[i].priority === 'high' ? 'Important': ''}</p>
   </div>
   <div class="middel-of-task">
   <div>
-      <p class='para'>${taskInfo[i].desc}</p>
+      <p class='para same'>${taskInfo[i].desc}</p>
   </div>
   <div class="btn-of-task">
-      <input type="checkbox" id="complete" name="complete" value="Completed">
+      <input type="checkbox" id="complete_${i}" onclick="handleCheckboxClick(${i})" name="complete" value="Completed">
       <img onclick="deleteTask(${i})" src="./Asset/bin_484611.png" alt="img">
   </div>
   </div>
   <div class="date-of-task">
-  <p>${taskInfo[i].date === dayOfMonth ? `${taskInfo[i].date}/${currMonth}/${currYear}` : ''}</p>
+  <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
+  <p>${taskInfo[i].time}</p>
   </div>
   </div>
   `);
@@ -112,6 +125,7 @@ todayTask();
 
 
 let localData = JSON.parse(localStorage.getItem('data'));   // local data
+console.log("data: ",localData);
 
 function deleteTask(i){
   localData.splice(i,1); // removiing one item
@@ -142,20 +156,21 @@ function importantTask(){
         entireInfo.push(`
         <div class="task-module">
         <div class='task-module-title'>
-          <p class='task-title'>${taskInfo[i].task}</p>
+          <p class='task-title same'>${taskInfo[i].task}</p>
           <p class='priority-p'>${taskInfo[i].priority === 'high' ? 'Important': ''}</p>
         </div>
         <div class="middel-of-task">
         <div>
-            <p class='para'>${taskInfo[i].desc}</p>
+            <p class='para same'>${taskInfo[i].desc}</p>
         </div>
         <div class="btn-of-task">
-            <input type="checkbox" id="complete" name="complete" value="Completed">
+            <input type="checkbox" id="complete_${i}" onclick="handleCheckboxClick(${i})" name="complete" value="Completed">
             <img onclick="deleteTask(${i})" src="./Asset/bin_484611.png" alt="img">
         </div>
         </div>
         <div class="date-of-task">
         <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
+        <p>${taskInfo[i].time}</p>
         </div>
         </div>
         `);
@@ -177,6 +192,7 @@ function allTask(){
   console.log('All task Cliked');
 
   let taskInfo = JSON.parse(localStorage.getItem("data"));
+  console.log(taskInfo);
   let count = 0;
   let entireInfo  = [];
   taskInfo.filter((value, i)=>{
@@ -184,20 +200,21 @@ function allTask(){
       entireInfo.push(`
       <div class="task-module">
       <div class='task-module-title'>
-        <p class='task-title'>${taskInfo[i].task}</p>
+        <p class='task-title same'>${taskInfo[i].task}</p>
         <p class='priority-p'>${taskInfo[i].priority === 'high' ? 'Important': ''}</p>
       </div>
       <div class="middel-of-task">
       <div>
-          <p class='para'>${taskInfo[i].desc}</p>
+          <p class='para same'>${taskInfo[i].desc}</p>
       </div>
       <div class="btn-of-task">
-          <input type="checkbox" id="complete" name="complete" value="Completed" onclick=''>
+          <input type="checkbox" id="complete_${i}" onclick="handleCheckboxClick(${i})" name="complete" value="Completed" onclick=''>
           <img onclick="deleteTask(${i})" src="./Asset/bin_484611.png" alt="img">
       </div>
       </div>
       <div class="date-of-task">
       <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
+      <p>${taskInfo[i].time}</p>
       </div>
       </div>
       `);
@@ -223,6 +240,7 @@ searchInput.addEventListener('input', function() {
 
 function filterTasks(search) {
     let taskInfo = JSON.parse(localStorage.getItem("data"));
+    console.log("data :",taskInfo);
     let count = 0;
     let entireInfo = [];
 
@@ -235,23 +253,24 @@ function filterTasks(search) {
             count++;
             entireInfo.push(`
                 <div class="task-module">
-                    <div class='task-module-title'>
-                        <p class='task-title'>${taskInfo[i].task}</p>
+                    <div class='task-module-title '>
+                        <p class='task-title same'>${taskInfo[i].task}</p>
                         <p class='priority-p'>${
                             taskInfo[i].priority === 'high' ? 'Important' : ''
                         }</p>
                     </div>
                     <div class="middel-of-task">
                         <div>
-                            <p class='para'>${taskInfo[i].desc}</p>
+                            <p class='para same'>${taskInfo[i].desc}</p>
                         </div>
                         <div class="btn-of-task">
-                            <input type="checkbox" id="complete" name="complete" value="Completed">
+                            <input type="checkbox" id="complete_${i}" onclick="handleCheckboxClick(${i})" name="complete" value="Completed">
                             <img onclick="deleteTask(${i})" src="./Asset/bin_484611.png" alt="img">
                         </div>
                     </div>
                     <div class="date-of-task">
                         <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
+                        <p>${taskInfo[i].time}</p>
                     </div>
                 </div>
             `);
@@ -267,5 +286,17 @@ function filterTasks(search) {
 
 
 
+// ----------------------------checkbox-functionality---------------------------------------
 
+function handleCheckboxClick(i) {
+  console.log("id",i);
+  let checkboxId = `complete_${i}`;
+  let sameElements = document.querySelectorAll(`#${checkboxId} .same`);
+  
+  sameElements.forEach((element) => {
+    element.classList.toggle("cross");
+  });
+
+  console.log('CheckBoxClicked');
+}
 

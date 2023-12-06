@@ -227,6 +227,10 @@ header{
 
 .date-of-task{
     font-size: 0.7rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3rem;
 }
 
 .date-of-task p{
@@ -256,4 +260,8 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.cross{
+    text-decoration: line-through;
 }
