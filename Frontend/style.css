@@ -8,6 +8,14 @@
     font-family: 'Poppins', sans-serif;
 }
 
+:root{
+   
+    --background-color: #1e1616;
+    --text-color:  antiquewhite;
+    --btn-background: #665d5d;
+  }
+  
+ 
 .main-container{
     display: flex;
 }
@@ -20,7 +28,7 @@
     border: 1px solid gray;
     border-radius: 1rem;
     padding: 1rem;
-    background: #1e1616;
+    background: var(--background-color);
 }
 
 .title h3{
@@ -34,13 +42,13 @@
     height: 4vh;
     border: 1px solid gray;
     border-radius: 1rem;
-    background: #665d5d;
+    background: var(--btn-background);
     margin-bottom: 2rem;
 }
 
 .nav-items li a{
     text-decoration: none;
-    color: antiquewhite;
+    color: var(--text-color);
 }
 
 
@@ -68,7 +76,7 @@
     border-radius: 1rem;
     padding: 1.5rem;
     background: #1e1616;
-    color: antiquewhite;
+    color: var(--text-color);
 
 }
 
@@ -82,7 +90,7 @@
     height: 4vh;
     border: 1px solid gray;
     border-radius: 1rem;
-    background: #665d5d;
+    background: var(--btn-background);
     margin-bottom: 2rem;
 }
 

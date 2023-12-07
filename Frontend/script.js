@@ -289,13 +289,17 @@ function filterTasks(search) {
 // ----------------------------checkbox-functionality---------------------------------------
 
 function handleCheckboxClick(i) {
-  console.log("id",i);
+  console.log("id", i);
+
   let checkboxId = `complete_${i}`;
-  let sameElements = document.querySelectorAll(`#${checkboxId} .same`);
-  
-  sameElements.forEach((element) => {
-    element.classList.toggle("cross");
-  });
+  console.log("checkbocID: ", checkboxId);
+
+  let sameElements = document.querySelector(`#${checkboxId}`);
+  console.log("SameElement: ",sameElements);
+
+  // sameElements.forEach((element) => {
+    sameElements.classList.toggle("cross");
+  // });
 
   console.log('CheckBoxClicked');
 }
