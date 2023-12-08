@@ -1,5 +1,3 @@
-
-
 // ---------------------------calender-functionality--------------------------------------------
 
 const currentDate = document.querySelector(".current-date");
@@ -8,19 +6,19 @@ const days = document.querySelector(".days");
 const tasksCount = document.querySelector(".middle-section");
 
 let date = new Date();
-let dayOfMonth = ('0' + date.getDate()).slice(-2);
-
+let dayOfMonth = ("0" + date.getDate()).slice(-2);
+console.log("dayOfmonth: ",dayOfMonth);
 let currYear = date.getFullYear();
 let currMonth = date.getMonth();
 
 //time
 let hours = date.getHours();
-let ampm = hours < 12 ? 'am':'pm';
+let ampm = hours < 12 ? "am" : "pm";
 hours = hours % 12;
 hours = hours ? hours : 12; //hours 0 should be 12
 let minutes = date.getMinutes();
-minutes = minutes < 10 ? '0'+minutes: minutes;
-let time = hours +':'+ minutes + ampm;
+minutes = minutes < 10 ? "0" + minutes : minutes;
+let time = hours + ":" + minutes + ampm;
 console.log("time :", time);
 
 let months = [
@@ -83,22 +81,29 @@ previousNext.forEach((icon) => {
 
 let taskModule = document.querySelector(".task-main-module");
 
-function todayTask(){
-let taskInfo = JSON.parse(localStorage.getItem("data"));
-let count = 0;
-let entireInfo  = [];
-taskInfo.forEach((value, i)=>{
-  if(taskInfo[i].date === dayOfMonth){
-  count++;
-  entireInfo.push(`
+async function todayTask() {
+  try {
+    const response = await fetch("http://localhost:5000/tasks");
+    data = await response.json();
+    console.log("data:", data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  let count = 0;
+  let entireInfo = [];
+  console.log("data in todayTask: ", data);
+  data.forEach((value, i) => {
+    if (data[i].date === dayOfMonth.charAt(0) === 0 ? dayOfMonth.charAt(1): dayOfMonth.charAt(0)){
+      count++;
+      entireInfo.push(`
   <div class="task-module">
   <div class='task-module-title'>
-    <p class='task-title same'>${taskInfo[i].task}</p>
-    <p class='priority-p'>${taskInfo[i].priority === 'high' ? 'Important': ''}</p>
+    <p class='task-title same'>${data[i].task}</p>
+    <p class='priority-p'>${data[i].priority === "high" ? "Important" : ""}</p>
   </div>
   <div class="middel-of-task">
   <div>
-      <p class='para same'>${taskInfo[i].desc}</p>
+      <p class='para same'>${data[i].description}</p>
   </div>
   <div class="btn-of-task">
       <input type="checkbox" id="complete_${i}" onclick="handleCheckboxClick(${i})" name="complete" value="Completed">
@@ -106,62 +111,60 @@ taskInfo.forEach((value, i)=>{
   </div>
   </div>
   <div class="date-of-task">
-  <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
-  <p>${taskInfo[i].time}</p>
+  <p>${
+    data[i].date === dayOfMonth
+      ? `${dayOfMonth}/${currMonth}/${currYear}`
+      : `${data[i].date}/${currMonth}/${currYear}`
+  }</p>
+  <p>${data[i].time}</p>
   </div>
   </div>
   `);
-  }
-  taskModule.innerHTML = entireInfo.join('');
-  tasksCount.innerHTML = 
-  ` <div>
+    }
+    taskModule.innerHTML = entireInfo.join("");
+    tasksCount.innerHTML = ` <div>
     <p>All tasks(${count} tasks)</p>
-  </div>`
-})
+  </div>`;
+  });
 }
-todayTask(); 
+todayTask();
 // -----------------delete-functionality------------------
 
+// let localData = JSON.parse(localStorage.getItem("data")); // local data
+// console.log("data: ", localData);
 
-
-let localData = JSON.parse(localStorage.getItem('data'));   // local data
-console.log("data: ",localData);
-
-function deleteTask(i){
-  localData.splice(i,1); // removiing one item
-  localStorage.setItem('data',JSON.stringify(localData));
-  todayTask(); 
-}
-
+// function deleteTask(i) {
+//   localData.splice(i, 1); // removiing one item
+//   localStorage.setItem("data", JSON.stringify(localData));
+//   todayTask();
+// }
 
 // ----------------------------completed-tasks------------------------------------------
 
-function completedTask(){
-  console.log('Completed task clicked');
+function completedTask() {
+  console.log("Completed task clicked");
 }
-
-
 
 // ----------------------------important-tasks-shortlist------------------------------------
 
-function importantTask(){
-
-    let taskInfo = JSON.parse(localStorage.getItem("data"));
-    let count = 0;
-    console.log(taskInfo);
-    let entireInfo  = [];
-    taskInfo.filter((value, i)=>{
-      if(value.priority.toLowerCase() === 'high'){
-        count++;
-        entireInfo.push(`
+function importantTask() {
+  let count = 0;
+  console.log("data in important",data);
+  let entireInfo = [];
+  data.filter((value, i) => {
+    if (value.priority.toLowerCase() === "high") {
+      count++;
+      entireInfo.push(`
         <div class="task-module">
         <div class='task-module-title'>
-          <p class='task-title same'>${taskInfo[i].task}</p>
-          <p class='priority-p'>${taskInfo[i].priority === 'high' ? 'Important': ''}</p>
+          <p class='task-title same'>${data[i].task}</p>
+          <p class='priority-p'>${
+            data[i].priority === "high" ? "Important" : ""
+          }</p>
         </div>
         <div class="middel-of-task">
         <div>
-            <p class='para same'>${taskInfo[i].desc}</p>
+            <p class='para same'>${data[i].description}</p>
         </div>
         <div class="btn-of-task">
             <input type="checkbox" id="complete_${i}" onclick="handleCheckboxClick(${i})" name="complete" value="Completed">
@@ -169,43 +172,46 @@ function importantTask(){
         </div>
         </div>
         <div class="date-of-task">
-        <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
-        <p>${taskInfo[i].time}</p>
+        <p>${
+          data[i].date === dayOfMonth
+            ? `${dayOfMonth}/${currMonth}/${currYear}`
+            : `${data[i].date}/${currMonth}/${currYear}`
+        }</p>
+        <p>${data[i].time}</p>
         </div>
         </div>
         `);
-      }
-     
-      taskModule.innerHTML = entireInfo.join('');
-      tasksCount.innerHTML = 
-      ` <div>
+    }
+
+    taskModule.innerHTML = entireInfo.join("");
+    tasksCount.innerHTML = ` <div>
         <p>All tasks(${count} tasks)</p>
-      </div>`
-    })
-    console.log("importantTask working")
+      </div>`;
+  });
+  console.log("importantTask working");
 }
 
 // ------------------------------------------allTask-module---------------------------------------
 
-function allTask(){
+function allTask() {
+  console.log("All task Cliked");
 
-  console.log('All task Cliked');
-
-  let taskInfo = JSON.parse(localStorage.getItem("data"));
-  console.log(taskInfo);
+  console.log("data", data);
   let count = 0;
-  let entireInfo  = [];
-  taskInfo.filter((value, i)=>{
-      count++;
-      entireInfo.push(`
+  let entireInfo = [];
+  data.filter((value, i) => {
+    count++;
+    entireInfo.push(`
       <div class="task-module">
       <div class='task-module-title'>
-        <p class='task-title same'>${taskInfo[i].task}</p>
-        <p class='priority-p'>${taskInfo[i].priority === 'high' ? 'Important': ''}</p>
+        <p class='task-title same'>${data[i].task}</p>
+        <p class='priority-p'>${
+          data[i].priority === "high" ? "Important" : ""
+        }</p>
       </div>
       <div class="middel-of-task">
       <div>
-          <p class='para same'>${taskInfo[i].desc}</p>
+          <p class='para same'>${data[i].description}</p>
       </div>
       <div class="btn-of-task">
           <input type="checkbox" id="complete_${i}" onclick="handleCheckboxClick(${i})" name="complete" value="Completed" onclick=''>
@@ -213,55 +219,56 @@ function allTask(){
       </div>
       </div>
       <div class="date-of-task">
-      <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
-      <p>${taskInfo[i].time}</p>
+      <p>${
+        data[i].date === dayOfMonth
+          ? `${dayOfMonth}/${currMonth}/${currYear}`
+          : `${data[i].date}/${currMonth}/${currYear}`
+      }</p>
+      <p>${data[i].time}</p>
       </div>
       </div>
       `);
-   
-    taskModule.innerHTML = entireInfo.join('');
-    tasksCount.innerHTML = 
-    ` <div>
-      <p>All tasks(${count} tasks)</p>
-    </div>`
-  })
-  console.log("importantTask working")
-}
 
+    taskModule.innerHTML = entireInfo.join("");
+    tasksCount.innerHTML = ` <div>
+      <p>All tasks(${count} tasks)</p>
+    </div>`;
+  });
+  console.log("importantTask working");
+}
 
 // -------------------------search-functionality---------------------------
 
-let searchInput = document.getElementById('search');
+let searchInput = document.getElementById("search");
 
-searchInput.addEventListener('input', function() {
-    let search = searchInput.value.toLowerCase();
-    filterTasks(search);
+searchInput.addEventListener("input", function () {
+  let search = searchInput.value.toLowerCase();
+  filterTasks(search);
 });
 
 function filterTasks(search) {
-    let taskInfo = JSON.parse(localStorage.getItem("data"));
-    console.log("data :",taskInfo);
-    let count = 0;
-    let entireInfo = [];
+  console.log("data in filter:", data);
+  let count = 0;
+  let entireInfo = [];
 
-    taskInfo.filter((value, i) => {
-        // Check if the task contains the search text
-        if (
-            taskInfo[i].task.toLowerCase().includes(search) ||
-            taskInfo[i].desc.toLowerCase().includes(search)
-        ) {
-            count++;
-            entireInfo.push(`
+  data.filter((value, i) => {
+    // Check if the task contains the search text
+    if (
+      data[i].task.toLowerCase().includes(search) ||
+      data[i].description.toLowerCase().includes(search)
+    ) {
+      count++;
+      entireInfo.push(`
                 <div class="task-module">
                     <div class='task-module-title '>
-                        <p class='task-title same'>${taskInfo[i].task}</p>
+                        <p class='task-title same'>${data[i].task}</p>
                         <p class='priority-p'>${
-                            taskInfo[i].priority === 'high' ? 'Important' : ''
+                          data[i].priority === "high" ? "Important" : ""
                         }</p>
                     </div>
                     <div class="middel-of-task">
                         <div>
-                            <p class='para same'>${taskInfo[i].desc}</p>
+                            <p class='para same'>${data[i].description}</p>
                         </div>
                         <div class="btn-of-task">
                             <input type="checkbox" id="complete_${i}" onclick="handleCheckboxClick(${i})" name="complete" value="Completed">
@@ -269,22 +276,24 @@ function filterTasks(search) {
                         </div>
                     </div>
                     <div class="date-of-task">
-                        <p>${taskInfo[i].date === dayOfMonth ? `${dayOfMonth}/${currMonth}/${currYear}` : `${taskInfo[i].date}/${currMonth}/${currYear}`}</p>
-                        <p>${taskInfo[i].time}</p>
+                        <p>${
+                          data[i].date === dayOfMonth
+                            ? `${dayOfMonth}/${currMonth}/${currYear}`
+                            : `${data[i].date}/${currMonth}/${currYear}`
+                        }</p>
+                        <p>${data[i].time}</p>
                     </div>
                 </div>
             `);
-        }
-    });
+    }
+  });
 
-    taskModule.innerHTML = entireInfo.join('');
-    tasksCount.innerHTML = `
+  taskModule.innerHTML = entireInfo.join("");
+  tasksCount.innerHTML = `
         <div>
             <p>All tasks(${count} tasks)</p>
         </div>`;
 }
-
-
 
 // ----------------------------checkbox-functionality---------------------------------------
 
@@ -295,12 +304,11 @@ function handleCheckboxClick(i) {
   console.log("checkbocID: ", checkboxId);
 
   let sameElements = document.querySelector(`#${checkboxId}`);
-  console.log("SameElement: ",sameElements);
+  console.log("SameElement: ", sameElements);
 
   // sameElements.forEach((element) => {
-    sameElements.classList.toggle("cross");
+  sameElements.classList.toggle("cross");
   // });
 
-  console.log('CheckBoxClicked');
+  console.log("CheckBoxClicked");
 }
-

@@ -11,62 +11,8 @@ let time = hours +':'+ minutes + ampm;
 console.log("time :", time);
 //Date
 let dayOfMonth = ('0' + date.getDate()).slice(-2);
-let currYear = date.getFullYear();
-let currMonth = date.getMonth();
-
-// function taskLoaded(e) {
-//     try {
-//         e.preventDefault();
-//         let task = document.getElementById('task1').value;
-//         let desc = document.getElementById('desc1').value;
-//         let priority = document.getElementById('priority').value;
-         
-//         console.log("task : ", task);
-//         console.log("desc : ", desc);
-
-//         let data = JSON.parse(localStorage.getItem('data'))||[];  //retriving old data
-
-//         let taskData = {
-//             'id': data.length,
-//             'task': task,
-//             'desc' : desc,
-//             'priority': priority,
-//             'date': `${dayOfMonth}`,
-//             'time': time
-//         }
-        
-//         data.push(taskData);
-
-//         localStorage.setItem('data',JSON.stringify(data));
-
-//         console.log("NewAdded", taskData);
-
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// function clearLocalStorage(e){
-//     try {
-//         e.preventDefault();
-//         localStorage.clear();
-//         console.log("Storage cleared")
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-
-// let clear = document.getElementById('btn-clear-task');
-
-
-// btn.addEventListener('click', (e) => {
-//     taskLoaded(e);
-// });
-
-// clear.addEventListener('click', (e) => {
-//     clearLocalStorage(e);
-// });
+// let currYear = date.getFullYear();
+// let currMonth = date.getMonth();
 
 
 let btn = document.querySelector('.btn-submit-task');
@@ -90,7 +36,7 @@ async function taskform(e) {
           return;
         }
       
-        const response = await fetch("http://localhost:3000/taskform", {
+        const response = await fetch("http://localhost:5000/taskform", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -101,10 +47,10 @@ async function taskform(e) {
         const data = await response.json();
       
         if (response.ok) {
-          warn.innerHTML = `<div style="color: green"><p>${data.message}</p></div>`;
+          warn.innerHTML = `<div style="color: green; background-color: aqua;"><p>${data.message}</p></div>`;
           // Redirect after successful login
           setTimeout(() => {
-            location.href = "/Frontend/index.html";
+            location.href = "/Frontend/Home.html";
           }, 2000);
         } else {
           warn.innerHTML = `<div style="color: red"><p>Invalid data</p></div>`;
@@ -112,8 +58,4 @@ async function taskform(e) {
     } catch (error) {
         console.log("Error",error);
     }
-  }
-
-  function form(){
-    console.log("Form clicked");
   }

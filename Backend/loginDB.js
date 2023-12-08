@@ -62,37 +62,5 @@ app.listen(PORT, () => {
 });
 
 
-// ------------------------------------------Task-Database--------------------------------------
 
-//databse for tasks
 
-const taskSchema = new mongoose.Schema({
-  task: String,
-  description: String,
-  time: int,
-  date: int,
-  priority: String
-});
-
-//tasks represents the collections in mongoDB
-let tasks = mongoose.model('tasks', taskSchema);
-
-app.post('/taskform', async (req, res) => {
-  const { task, desc, time, dayOfMonth, priority } = req.body; // distructuring username and password
-  
-
-  //creating new on object
-  const newUser = new User({
-    task, 
-    desc, 
-    time, 
-    dayOfMonth, 
-    priority
-  });
-
-  //saving in mongoDB collection
-  await newUser.save();
-  
-  //sending response to frontend
-  res.status(200).json({ message: 'Task added successfully!' });
-});

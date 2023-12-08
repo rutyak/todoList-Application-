@@ -8,7 +8,7 @@
 
 form{
     width: 50%;
-    height: 52vh;
+    height: 56vh;
     border: 1px solid gray;
     border-radius: 1rem;
     margin: 0px auto;
@@ -44,4 +44,8 @@ form label{
 
 form div{
     background: #5b6960;
+}
+
+#warning{
+    margin-top: 0.6rem;
 }

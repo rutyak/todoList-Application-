@@ -37,7 +37,7 @@ async function signup() {
     warn.innerHTML = `<div style="color: green"><p>${data.message}</p></div>`;
     // Redirect after successful signup
     setTimeout(() => {
-      location.href = "/Frontend/index.html";
+      location.href = "/Frontend/Home.html";
     }, 2000);
   } else {
     warn.innerHTML = `<div style="color: red"><p>${data.message}</p></div>`;
@@ -71,11 +71,9 @@ async function login() {
     warn.innerHTML = `<div style="color: green"><p>${data.message}</p></div>`;
     // Redirect after successful login
     setTimeout(() => {
-      location.href = "/Frontend/index.html";
+      location.href = "/Frontend/Home.html";
     }, 2000);
   } else {
     warn.innerHTML = `<div style="color: red"><p>${data.message}</p></div>`;
   }
-
-
 }
